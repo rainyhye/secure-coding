@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>로그인</h2>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div>
+      {{ form.username.label }}<br>
+      {{ form.username(class="form-control") }}
+    </div>
+
+    <div>
+      {{ form.password.label }}<br>
+      {{ form.password(class="form-control") }}
+    </div>
+
+    <div>
+      {{ form.submit(class="btn btn-primary") }}
+    </div>
+  </form>
+{% endblock %}
