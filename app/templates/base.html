@@ -55,16 +55,22 @@
       border-radius: 4px;
       margin-bottom: 10px;
       background-color: #fafafa;
+
+    .form-errors {
+      font-size: 14px;
+      color: #d32f2f;
+      margin-top: -10px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
   <nav>
     {% if session.get('user_id') %}
-      <a href="{{ url_for('dashboard') }}">대시보드</a>
-      <a href="{{ url_for('profile') }}">프로필</a>
-      <a href="{{ url_for('report') }}">신고하기</a>
-      <a href="{{ url_for('logout') }}">로그아웃</a>
+      <a href="{{ url_for('dashboard.user_dashboard') }}">대시보드</a>
+      <a href="{{ url_for('profile.profile') }}">프로필</a>
+      <a href="{{ url_for('report.report') }}">신고하기</a>
+      <a href="{{ url_for('auth.logout') }}">로그아웃</a>
     {% else %}
       <a href="{{ url_for('auth.login') }}">로그인</a>
       <a href="{{ url_for('auth.register') }}">회원가입</a>

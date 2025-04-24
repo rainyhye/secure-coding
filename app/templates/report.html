@@ -1,11 +1,29 @@
-{% extends "base.html" %}
+
+{% extends 'base.html' %}
 {% block title %}신고하기{% endblock %}
 {% block content %}
-<h2>신고하기</h2>
-<form method="post">
-  신고 대상 (사용자ID 또는 상품ID): <input type="text" name="target_id" required><br>
-  신고 사유: <br>
-  <textarea name="reason" rows="4" cols="50" required></textarea><br>
-  <button type="submit">신고 접수</button>
-</form>
+  <h2>신고하기</h2>
+  <form method="POST">
+    <div class="mb-3">
+      <label for="target_type" class="form-label">신고 대상 유형</label>
+      <select name="target_type" id="target_type" class="form-select">
+        <option value="user">사용자</option>
+        <option value="product">상품</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="target_id" class="form-label">대상 ID</label>
+      <input type="number" name="target_id" id="target_id" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="reason" class="form-label">신고 사유</label>
+      <textarea name="reason" id="reason" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-danger">신고 제출</button>
+  </form>
 {% endblock %}
+
+

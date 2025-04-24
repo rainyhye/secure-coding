@@ -1,8 +1,8 @@
 # app/models/models.py
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from app import db  # 기존에 있는 db 인스턴스
 
-db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -3,10 +3,46 @@
   <h2>회원가입</h2>
   <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.username.label }} {{ form.username() }}<br>
-    {{ form.email.label }} {{ form.email() }}<br>
-    {{ form.password.label }} {{ form.password() }}<br>
-    {{ form.submit() }}
+
+    <div>
+      {{ form.username.label }}<br>
+      {{ form.username(class="form-control") }}
+      {% if form.username.errors %}
+        <ul class="form-errors">
+          {% for error in form.username.errors %}
+            <li style="color: red;">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      {{ form.email.label }}<br>
+      {{ form.email(class="form-control") }}
+      {% if form.email.errors %}
+        <ul class="form-errors">
+          {% for error in form.email.errors %}
+            <li style="color: red;">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      {{ form.password.label }}<br>
+      {{ form.password(class="form-control") }}
+      {% if form.password.errors %}
+        <ul class="form-errors">
+          {% for error in form.password.errors %}
+            <li style="color: red;">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      {{ form.submit(class="btn btn-primary") }}
+    </div>
   </form>
 {% endblock %}
 

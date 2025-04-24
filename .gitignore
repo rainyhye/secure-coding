@@ -1,4 +1,6 @@
 *.db
+*.sqlite
+instance/*
 *.pptx
 __pycache__
 venv/

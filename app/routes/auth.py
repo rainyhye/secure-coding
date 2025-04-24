@@ -1,16 +1,19 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.models import db, User
-from app.forms.forms import LoginForm
+from app.forms.forms import LoginForm, RegisterForm
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
+    form = RegisterForm()  # FlaskForm 인스턴스 생성
+
+    if form.validate_on_submit():  # changed
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+
 
         # 중복 사용자 확인
         existing_user = User.query.filter((User.username == username) | (User.email == email)).first()
@@ -26,7 +29,7 @@ def register():
         flash('Complete Register! Please login', 'success')
         return redirect(url_for('auth.login'))
 
-    return render_template('register.html')
+    return render_template('register.html', form=form) #폼 전달
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -39,8 +42,12 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password_hash, password):
             session['user_id'] = user.id
+            session['role'] = user.role
             flash('Success login!', 'success')
-            return redirect(url_for('dashboard')) #나중에 별도 구현
+            if user.role == 'admin':
+                return redirect(url_for('admin.admin_dashboard'))
+            else:
+                return redirect(url_for('dashboard.user_dashboard'))
         else:
             flash('Wrong id or password.', 'error')
             return redirect(url_for('auth.login'))
