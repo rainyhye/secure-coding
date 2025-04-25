@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from flask_socketio import SocketIO
 
-
 # 확장기능 인스턴스 생성
 db = SQLAlchemy()
 csrf = CSRFProtect()
@@ -30,6 +29,8 @@ def create_app():
     from app.routes.profile import profile_bp
     from app.routes.report import report_bp
     from app.sockets import chat_socket
+    from app.routes.transfer import transfer_bp
+    from app.routes.recharge import recharge_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(product_bp)
@@ -39,6 +40,8 @@ def create_app():
     app.register_blueprint(user_bp)   
     app.register_blueprint(profile_bp)
     app.register_blueprint(report_bp)
+    app.register_blueprint(transfer_bp)
+    app.register_blueprint(recharge_bp)
 
     return app
 

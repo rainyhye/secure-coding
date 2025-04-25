@@ -23,3 +23,12 @@ class ProductForm(FlaskForm):
 class ProfileForm(FlaskForm):
     bio = TextAreaField('소개글', validators=[Length(max=500)])
     submit = SubmitField('프로필 업데이트')
+
+class TransferForm(FlaskForm):
+    receiver_username = StringField('받는 사람 사용자명', validators=[DataRequired()])
+    amount = IntegerField('송금 금액', validators=[DataRequired(), NumberRange(min=1)])
+    submit = SubmitField('송금하기')
+
+class RechargeForm(FlaskForm):
+    amount = IntegerField('충전 금액', validators=[DataRequired(), NumberRange(min=1)])
+    submit = SubmitField('충전하기')

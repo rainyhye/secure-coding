@@ -13,6 +13,7 @@ class User(db.Model):
     status = db.Column(db.String(10), default='active')  # active or blocked
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     bio = db.Column(db.Text, default="") 
+    balance = db.Column(db.Integer, default=0)
     
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,7 +44,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=True)
     amount = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(20), default='pending')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
