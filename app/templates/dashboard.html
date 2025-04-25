@@ -32,12 +32,14 @@
 
 <script type="text/javascript">
   var socket = io();
+
   socket.on('connect', function() {
     console.log("채팅 서버에 연결됨");
   });
-  socket.on('message', function(data) {
+
+  socket.on('receive_message', function(data) {
     const safeUsername = DOMPurify.sanitize(data.username);
-    const safeMessage = DOMPurify.sanitize(data.message);
+    const safeMessage = DOMPurify.sanitize(data.msg);  
     var messages = document.getElementById('messages');
     var item = document.createElement('li');
     item.className = "list-group-item";
@@ -45,16 +47,19 @@
     messages.appendChild(item);
     messages.scrollTop = messages.scrollHeight;
   });
+
   function sendMessage() {
     var input = document.getElementById('chat_input');
     var message = input.value;
     if (message) {
-      socket.emit('send_message', { 'username': "{{ user.username }}", 'message': message });
+      socket.emit('send_message', {
+        'username': "{{ user.username }}",
+        'message': message
+      });
       input.value = "";
     }
   }
 </script>
-
 <!-- DOMPurify CDN for sanitizing -->
 <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
 {% endblock %}

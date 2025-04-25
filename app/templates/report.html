@@ -1,21 +1,35 @@
 {% extends "base.html" %}
 {% block title %}신고하기{% endblock %}
 {% block content %}
-<h2>신고하기</h2>
-<form method="POST">
-  {{ form.hidden_tag() }}
-  <div class="mb-3">
-    {{ form.target_type.label(class="form-label") }}
-    {{ form.target_type(class="form-control") }}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold text-center">
+        신고하기
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.target_type.label(class="form-label") }}
+            {{ form.target_type(class="form-control") }}
+          </div>
+          <div class="mb-3">
+            {{ form.target_id.label(class="form-label") }}
+            {{ form.target_id(class="form-control") }}
+          </div>
+          <div class="mb-3">
+            {{ form.reason.label(class="form-label") }}
+            {{ form.reason(class="form-control", rows=4) }}
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-danger btn-lg">{{ form.submit.label.text }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div class="mb-3">
-    {{ form.target_id.label(class="form-label") }}
-    {{ form.target_id(class="form-control") }}
-  </div>
-  <div class="mb-3">
-    {{ form.reason.label(class="form-label") }}
-    {{ form.reason(class="form-control") }}
-  </div>
-  <button type="submit" class="btn btn-danger">{{ form.submit.label.text }}</button>
-</form>
+</div>
+
 {% endblock %}

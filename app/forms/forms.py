@@ -2,6 +2,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Email, Length, NumberRange
+from flask_wtf.file import FileField, FileAllowed
 
 class RegisterForm(FlaskForm):
     username = StringField('사용자 이름', validators=[DataRequired(), Length(min=3, max=20)])
@@ -18,6 +19,9 @@ class ProductForm(FlaskForm):
     title = StringField('제목', validators=[DataRequired()])
     description = TextAreaField('설명', validators=[DataRequired()])
     price = IntegerField('가격', validators=[DataRequired(), NumberRange(min=0)])
+    image = FileField('이미지', validators=[
+        FileAllowed(['jpg', 'png', 'jpeg', 'gif'], '이미지 파일만 업로드할 수 있습니다.')
+    ])
     submit = SubmitField('상품 등록')
     
 class ProfileForm(FlaskForm):

@@ -5,4 +5,4 @@ from app import socketio
 def handle_message(data):
     username = data.get('username', '익명')
     message = data.get('message', '')
-    emit('message', {'username': username, 'message': message}, broadcast=True)
+    emit('receive_message', {'msg': message, 'username': username}, broadcast=True)

@@ -2,61 +2,84 @@
 {% block title %}관리자 대시보드{% endblock %}
 {% block content %}
 
-<h3>사용자 목록</h3>
-<ul>
-  {% for user in users %}
-    <li>
-      {{ user.username }} (상태: {{ user.status }})
-      {% if user.status != 'blocked' %}
-        <a href="{{ url_for('admin.block_user', user_id=user.id) }}" class="btn btn-danger btn-sm">차단</a>
-      {% else %}
-        <span class="text-muted">차단됨</span>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+<h2 class="fw-bold mb-4">관리자 대시보드</h2>
 
-<h3>상품 목록</h3>
-<ul>
- {% for product in products %}
-    <li>
-      {{ product.title }} (차단 여부: {{ '차단됨' if product.is_blocked else '정상' }})
-      {% if not product.is_blocked %}
-        <a href="{{ url_for('admin.block_product', product_id=product.id) }}" class="btn btn-warning btn-sm">상품 차단</a>
-      {% else %}
-        <span class="text-muted">차단됨</span>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+<div class="row g-4">
 
-<h3>최근 거래 내역</h3>
-<ul>
-  {% for tx in transactions %}
-    <li>
-      송신자 ID: {{ tx.sender_id }} → 수신자 ID: {{ tx.receiver_id }}<br>
-      금액: {{ tx.amount }}원 | 상태: {{ tx.status }} | 날짜: {{ tx.created_at.strftime('%Y-%m-%d %H:%M') }}
-    </li>
-  {% else %}
-    <li class="text-muted">거래 내역이 없습니다.</li>
-  {% endfor %}
-</ul>
+  <!-- 사용자 목록 -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold">사용자 목록</div>
+      <ul class="list-group list-group-flush">
+        {% for user in users %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ user.username }} ({{ user.status }})
+          {% if user.status != 'blocked' %}
+          <a href="{{ url_for('admin.block_user', user_id=user.id) }}" class="btn btn-sm btn-danger">차단</a>
+          {% else %}
+          <span class="badge bg-secondary">차단됨</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
+  <!-- 상품 목록 -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold">상품 목록</div>
+      <ul class="list-group list-group-flush">
+        {% for product in products %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ product.title }} ({{ '차단됨' if product.is_blocked else '정상' }})
+          {% if not product.is_blocked %}
+          <a href="{{ url_for('admin.block_product', product_id=product.id) }}" class="btn btn-sm btn-warning">상품 차단</a>
+          {% else %}
+          <span class="badge bg-secondary">차단됨</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
-<h3>신고 내역</h3>
-<ul>
-  {% for report in reports %}
-    <li>
-      [{{ report.target_type }}] 대상 ID: {{ report.target_id }} <br>
-      사유: {{ report.reason }}<br>
-      신고자: {{ report.reporter_id }}
-    </li>
-  {% else %}
-    <li class="text-muted">신고 내역이 없습니다.</li>
-  {% endfor %}
-</ul>
+  <!-- 신고 내역 -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold">신고 내역</div>
+      <ul class="list-group list-group-flush">
+        {% for report in reports %}
+        <li class="list-group-item">
+          <strong>[{{ report.target_type }}]</strong> 대상 ID: {{ report.target_id }}<br>
+          사유: {{ report.reason }}<br>
+          신고자 ID: {{ report.reporter_id }}
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">신고 내역이 없습니다.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
+  <!-- 거래 내역 -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold">최근 거래 내역</div>
+      <ul class="list-group list-group-flush">
+        {% for tx in transactions %}
+        <li class="list-group-item">
+          {{ tx.sender_id }} → {{ tx.receiver_id }}<br>
+          금액: {{ tx.amount }}원<br>
+          상태: {{ tx.status }} | {{ tx.created_at.strftime('%Y-%m-%d %H:%M') }}
+        </li>
+        {% else %}
+        <li class="list-group-item text-muted">거래 내역이 없습니다.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
-
+</div>
 
 {% endblock %}
