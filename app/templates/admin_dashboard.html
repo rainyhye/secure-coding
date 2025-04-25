@@ -30,5 +30,33 @@
   {% endfor %}
 </ul>
 
+<h3>최근 거래 내역</h3>
+<ul>
+  {% for tx in transactions %}
+    <li>
+      송신자 ID: {{ tx.sender_id }} → 수신자 ID: {{ tx.receiver_id }}<br>
+      금액: {{ tx.amount }}원 | 상태: {{ tx.status }} | 날짜: {{ tx.created_at.strftime('%Y-%m-%d %H:%M') }}
+    </li>
+  {% else %}
+    <li class="text-muted">거래 내역이 없습니다.</li>
+  {% endfor %}
+</ul>
+
+
+<h3>신고 내역</h3>
+<ul>
+  {% for report in reports %}
+    <li>
+      [{{ report.target_type }}] 대상 ID: {{ report.target_id }} <br>
+      사유: {{ report.reason }}<br>
+      신고자: {{ report.reporter_id }}
+    </li>
+  {% else %}
+    <li class="text-muted">신고 내역이 없습니다.</li>
+  {% endfor %}
+</ul>
+
+
+
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from app.models.models import db, User, Product, Report, AdminLog
+from app.models.models import db, User, Product, Report, AdminLog, Transaction
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -19,6 +19,7 @@ def admin_dashboard():
     users = User.query.all()
     products = Product.query.all()
     reports = Report.query.all()
+    transactions = Transaction.query.order_by(Transaction.created_at.desc()).limit(10).all()
     return render_template('admin_dashboard.html', users=users, products=products, reports=reports)
 
 
@@ -56,3 +57,4 @@ def block_product(product_id):
 
     flash('상품이 차단되었습니다.', 'success')
     return redirect(url_for('admin.admin_dashboard'))
+
