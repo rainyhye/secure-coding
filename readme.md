@@ -7,11 +7,13 @@
 
 ## 🛠️ 설치 및 실행 방법
 
-### 1. 프로젝트 클론
+## 1. 프로젝트 클론
 
 bash
 git clone https://github.com/사용자명/secure-coding.git
-cd secure-coding 2. 가상환경 생성 및 활성화
+cd secure-coding
+
+## 2. 가상환경 생성 및 활성화
 
 ### 가상환경 생성
 
