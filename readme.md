@@ -13,28 +13,29 @@ bash
 git clone https://github.com/사용자명/secure-coding.git
 cd secure-coding 2. 가상환경 생성 및 활성화
 
-# 가상환경 생성
+### 가상환경 생성
 
 python -m venv venv
 
-# Windows
+### Windows
 
 venv\Scripts\activate
 
-# Mac/Linux
+### Mac/Linux
 
 source venv/bin/activate
 
-3. 필요한 패키지 설치
-   pip install -r requirements.txt
+## 3. 필요한 패키지 설치
 
-4. 데이터베이스 생성
+pip install -r requirements.txt
 
-# Python 쉘 진입
+## 4. 데이터베이스 생성
+
+### Python 쉘 진입
 
 python
 
-# DB 생성
+### DB 생성
 
 from app import db, create_app
 app = create_app()
@@ -42,8 +43,9 @@ with app.app_context():
 db.create_all()
 exit()
 
-5. 서버 실행
-   python run.py
+## 5. 서버 실행
+
+python run.py
 
 관리자 계정 생성 방법
 
