@@ -66,18 +66,20 @@
 </head>
 <body>
   <nav>
-    {% if session.get('user_id') %}
-      <a href="{{ url_for('dashboard.user_dashboard') }}">대시보드</a>
-      <a href="{{ url_for('profile.profile') }}">프로필</a>
-      <a href="{{ url_for('report.report') }}">신고하기</a>
-      <a href="{{ url_for('auth.logout') }}">로그아웃</a>
-    {% else %}
-      <a href="{{ url_for('auth.login') }}">로그인</a>
-      <a href="{{ url_for('auth.register') }}">회원가입</a>
+  {% if session.get('role') == 'admin' %}
+    <a href="{{ url_for('admin.admin_dashboard') }}">관리자 대시보드</a>
+  {% endif %}
 
-    {% endif %}
-  </nav>
-
+  {% if session.get('user_id') %}
+    <a href="{{ url_for('dashboard.user_dashboard') }}">대시보드</a>
+    <a href="{{ url_for('profile.profile') }}">프로필</a>
+    <a href="{{ url_for('report.report') }}">신고하기</a>
+    <a href="{{ url_for('auth.logout') }}">로그아웃</a>
+  {% else %}
+    <a href="{{ url_for('auth.login') }}">로그인</a>
+    <a href="{{ url_for('auth.register') }}">회원가입</a>
+  {% endif %}
+</nav>
   <div class="custom-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}

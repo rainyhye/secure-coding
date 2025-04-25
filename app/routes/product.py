@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app.models.models import db, Product, User
+from app.forms.forms import ProductForm
 from werkzeug.utils import secure_filename
 import os
 
@@ -16,7 +17,7 @@ def allowed_file(filename):
 @product_bp.route('/products')
 def list_products():
     products = Product.query.filter_by(is_blocked=False).all()
-    return render_template('product/list.html', products=products)
+    return render_template('list.html', products=products)
 
 
 
@@ -30,29 +31,20 @@ def view_product(product_id):
     return render_template('view_product.html', product=product, seller=seller)
 
 
-
 @product_bp.route('/products/new', methods=['GET', 'POST'])
 def new_product():
     if 'user_id' not in session:
         flash('로그인이 필요합니다.', 'error')
         return redirect(url_for('auth.login'))
 
-    if request.method == 'POST':
-        title = request.form.get('title', '').strip()
-        description = request.form.get('description', '').strip()
-        price = request.form.get('price', '').strip()
+    form = ProductForm()
+    if form.validate_on_submit():
         file = request.files.get('image')
-
-        # 필수값 검증
-        if not title or not description or not price.isdigit():
-            flash('모든 필드를 정확히 입력해주세요.', 'error')
-            return redirect(url_for('product.new_product'))
-
         image_url = None
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            if not os.path.exists(UPLOAD_FOLDER):
-                os.makedirs(UPLOAD_FOLDER)
+            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
             filepath = os.path.join(UPLOAD_FOLDER, filename)
             file.save(filepath)
             image_url = f'/static/uploads/{filename}'
@@ -62,9 +54,9 @@ def new_product():
 
         product = Product(
             seller_id=session['user_id'],
-            title=title,
-            description=description,
-            price=int(price),
+            title=form.title.data,
+            description=form.description.data,
+            price=form.price.data,
             image_url=image_url
         )
         db.session.add(product)
@@ -72,5 +64,5 @@ def new_product():
         flash('상품이 등록되었습니다.', 'success')
         return redirect(url_for('product.list_products'))
 
-    return render_template('new_product.html')
+    return render_template('new_product.html', form=form)
 

@@ -12,7 +12,8 @@ class User(db.Model):
     role = db.Column(db.String(10), default='user')  # user or admin
     status = db.Column(db.String(10), default='active')  # active or blocked
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
+    bio = db.Column(db.Text, default="") 
+    
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

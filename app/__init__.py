@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
+from flask_socketio import SocketIO
 
 
 # 확장기능 인스턴스 생성
 db = SQLAlchemy()
 csrf = CSRFProtect()
+socketio = SocketIO(cors_allowed_origins="*")
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +18,7 @@ def create_app():
     # 확장기능 등록
     db.init_app(app)
     csrf.init_app(app)
+    socketio.init_app(app)
 
     # 라우터 등록
     from app.routes.auth import auth_bp
@@ -26,6 +29,7 @@ def create_app():
     from app.routes.dashboard import user_bp
     from app.routes.profile import profile_bp
     from app.routes.report import report_bp
+    from app.sockets import chat_socket
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(product_bp)

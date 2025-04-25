@@ -19,7 +19,7 @@ def admin_dashboard():
     users = User.query.all()
     products = Product.query.all()
     reports = Report.query.all()
-    return render_template('admin/dashboard.html', users=users, products=products, reports=reports)
+    return render_template('admin_dashboard.html', users=users, products=products, reports=reports)
 
 
 @admin_bp.route('/admin/block_user/<int:user_id>')
