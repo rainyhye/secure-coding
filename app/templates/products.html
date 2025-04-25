@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}전체 상품{% endblock %}
+{% block content %}
+<h2>전체 상품</h2>
+
+{% if products %}
+  <ul class="list-group">
+    {% for product in products %}
+      <li class="list-group-item">
+        <a href="{{ url_for('product.view_product', product_id=product.id) }}">{{ product.title }}</a>
+        - {{ product.price }}원
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>등록된 상품이 없습니다.</p>
+{% endif %}
+{% endblock %}

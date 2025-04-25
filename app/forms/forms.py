@@ -32,3 +32,9 @@ class TransferForm(FlaskForm):
 class RechargeForm(FlaskForm):
     amount = IntegerField('충전 금액', validators=[DataRequired(), NumberRange(min=1)])
     submit = SubmitField('충전하기')
+
+class ReportForm(FlaskForm):
+    target_type = StringField('신고 대상 유형', validators=[DataRequired()])
+    target_id = IntegerField('대상 ID', validators=[DataRequired()])
+    reason = TextAreaField('신고 사유', validators=[DataRequired()])
+    submit = SubmitField('신고 제출')

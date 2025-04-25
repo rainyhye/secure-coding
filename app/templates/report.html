@@ -1,29 +1,21 @@
-
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}신고하기{% endblock %}
 {% block content %}
-  <h2>신고하기</h2>
-  <form method="POST">
-    <div class="mb-3">
-      <label for="target_type" class="form-label">신고 대상 유형</label>
-      <select name="target_type" id="target_type" class="form-select">
-        <option value="user">사용자</option>
-        <option value="product">상품</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label for="target_id" class="form-label">대상 ID</label>
-      <input type="number" name="target_id" id="target_id" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="reason" class="form-label">신고 사유</label>
-      <textarea name="reason" id="reason" class="form-control" required></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-danger">신고 제출</button>
-  </form>
+<h2>신고하기</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="mb-3">
+    {{ form.target_type.label(class="form-label") }}
+    {{ form.target_type(class="form-control") }}
+  </div>
+  <div class="mb-3">
+    {{ form.target_id.label(class="form-label") }}
+    {{ form.target_id(class="form-control") }}
+  </div>
+  <div class="mb-3">
+    {{ form.reason.label(class="form-label") }}
+    {{ form.reason(class="form-control") }}
+  </div>
+  <button type="submit" class="btn btn-danger">{{ form.submit.label.text }}</button>
+</form>
 {% endblock %}
-
-

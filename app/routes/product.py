@@ -14,7 +14,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@product_bp.route('/products')
+@product_bp.route('/products/list')
 def list_products():
     products = Product.query.filter_by(is_blocked=False).all()
     return render_template('list.html', products=products)
@@ -65,4 +65,18 @@ def new_product():
         return redirect(url_for('product.list_products'))
 
     return render_template('new_product.html', form=form)
+@product_bp.route('/search')
+def search():
+    keyword = request.args.get('q', '')
+    if keyword:
+        products = Product.query.filter(Product.title.ilike(f"%{keyword}%")).all()
+    else:
+        products = []
 
+    return render_template('search.html', keyword=keyword, products=products)
+
+
+@product_bp.route('/products')
+def all_products():
+    products = Product.query.all()
+    return render_template('products.html', products=products)
